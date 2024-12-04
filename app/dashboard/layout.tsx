@@ -10,7 +10,7 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { Menu, User2, User2Icon } from 'lucide-react';
+import { Menu, User2 } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,13 +20,35 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { signOut } from '../utils/auth';
+import prisma from '../utils/db';
+import { redirect } from 'next/navigation';
 
 interface Props {
   children: React.ReactNode;
 }
 
+async function getUser(userId: string) {
+  const data = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+    select: {
+      firstName: true,
+      lastName: true,
+      address: true,
+    },
+  });
+
+  if (!data?.firstName || !data?.lastName || !data?.address) {
+    redirect('/onboarding');
+  }
+}
+
 export default async function layout({ children }: Props) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const session = await requireUser();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const data = await getUser(session.user?.id as string);
   return (
     <>
       <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">

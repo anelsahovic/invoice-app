@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -10,12 +9,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { auth, signIn } from '../utils/auth';
 import SubmitButton from '../components/SubmitButtons';
-import { requireUser } from '../utils/hooks';
 import { redirect } from 'next/navigation';
 
-type Props = {};
-
-export default async function Login({}: Props) {
+export default async function Login() {
   const session = await auth();
 
   if (session?.user) {
@@ -52,7 +48,7 @@ export default async function Login({}: Props) {
                 <Input type="password" placeholder="••••••••" />
               </div> */}
 
-              <SubmitButton />
+              <SubmitButton text="Submit" />
             </form>
           </CardContent>
         </Card>

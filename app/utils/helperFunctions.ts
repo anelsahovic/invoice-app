@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import prisma from './db';
 
 export function formatCurrency(amount: number, currency: string) {
@@ -76,4 +76,17 @@ export async function getUserData(userId: string) {
   }
 
   return data;
+}
+
+export async function Authorize(invoiceId: string, userId: string) {
+  const data = await prisma.invoice.findUnique({
+    where: {
+      id: invoiceId,
+      userId: userId,
+    },
+  });
+
+  if (!data) {
+    return redirect('/dashboard/invoices');
+  }
 }

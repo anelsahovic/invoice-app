@@ -35,7 +35,7 @@ export default function InvoiceActions({ invoiceId }: Props) {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href="">
+          <Link href={`/dashboard/invoices/${invoiceId}`}>
             <Pencil className="size-4 mr-2" /> Edit
           </Link>
         </DropdownMenuItem>

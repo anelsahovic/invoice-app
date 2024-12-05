@@ -10,7 +10,7 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { Menu, User2 } from 'lucide-react';
+import { Menu, User } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -58,7 +58,7 @@ export default async function layout({ children }: Props) {
               <Link href="/" className="flex items-center ">
                 <Image src={Logo} alt="logo" className="size-10" />
                 <p className="text-2xl font-bold ml-2">Invoice</p>
-                <span className="text-blue-500 font-bold text-sm uppercase">
+                <span className="text-primary font-bold text-sm uppercase">
                   App
                 </span>
               </Link>
@@ -76,7 +76,7 @@ export default async function layout({ children }: Props) {
           <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant={'outline'} size={'icon'} className="md:hidden">
+                <Button variant={'default'} size={'icon'} className="md:hidden">
                   <Menu className="size-5" />
                 </Button>
               </SheetTrigger>
@@ -85,8 +85,8 @@ export default async function layout({ children }: Props) {
                 <SheetTitle>
                   <Link href="/" className="flex items-center ">
                     <Image src={Logo} alt="logo" className="size-10" />
-                    <p className="text-2xl font-bold ml-2">Invoice</p>
-                    <span className="text-blue-500 font-bold text-sm uppercase">
+                    <p className="text-2xl font-bold ml-2 ">Invoice</p>
+                    <span className="text-primary font-bold text-sm uppercase">
                       App
                     </span>
                   </Link>
@@ -101,12 +101,12 @@ export default async function layout({ children }: Props) {
               <DropdownMenu>
                 <DropdownMenuTrigger>
                   <Button
-                    className="rounded-full"
+                    className="rounded-full text-primary hover:text-primary/90"
                     variant="outline"
                     size="icon"
                     asChild
                   >
-                    <User2 />
+                    <User className="p-1" />
                   </Button>
                 </DropdownMenuTrigger>
 

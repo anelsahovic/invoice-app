@@ -48,7 +48,7 @@ export async function GET(
 
   pdf.setFont('helvetica');
   // Add Colors
-  const primaryColor: [number, number, number] = [33, 150, 243];
+  const primaryColor: [number, number, number] = [45, 154, 119];
   const secondaryColor: [number, number, number] = [240, 240, 240];
   const textColor: [number, number, number] = [40, 40, 40];
   const labelColor: [number, number, number] = [100, 100, 100];

@@ -1,4 +1,4 @@
-import { deleteInvoice } from '@/app/actions';
+import { markAsPaid } from '@/app/actions';
 import SubmitButton from '@/app/components/SubmitButtons';
 import { Authorize } from '@/app/utils/helperFunctions';
 import { requireUser } from '@/app/utils/hooks';
@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { CircleAlert } from 'lucide-react';
+import { CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
 
@@ -18,25 +18,25 @@ interface Props {
   params: Promise<{ invoiceId: string }>;
 }
 
-export default async function DeleteInvoiceRoute({ params }: Props) {
-  const invoiceId = (await params).invoiceId;
+export default async function MarkAsPaid({ params }: Props) {
   const session = await requireUser();
-  await Authorize(invoiceId, session.user?.id as string);
+  const invoiceId = (await params).invoiceId;
 
+  await Authorize(invoiceId, session.user?.id as string);
   return (
     <div className="flex flex-1 justify-center items-center">
       <Card className="max-w-[500px]">
         <CardHeader className="flex flex-col justify-center items-center">
-          <div className="p-2 bg-rose-100 text-rose-500 rounded-full flex items-center justify-center gap-1  w-fit">
-            <CircleAlert className="size-20" />
+          <div className="p-2 bg-green-100 text-green-500 rounded-full flex items-center justify-center gap-1  w-fit">
+            <CheckCircle className="size-20" />
           </div>
-          <CardTitle className="text-center text-2xl">Delete Invoice</CardTitle>
+          <CardTitle className="text-center text-2xl">Mark as Paid</CardTitle>
           <CardDescription className="font-semibold text-zinc-900">
-            Are you sure you want to delete this invoice?
+            Are you sure you want to mark this invoice as paid?
           </CardDescription>
           <CardDescription className="text-center">
-            Deleting this invoice will remove all of its data from database This
-            action can not be undone!
+            Marking this invoice as paid will change its status to complete and
+            update its value in database.
           </CardDescription>
         </CardHeader>
 
@@ -50,11 +50,10 @@ export default async function DeleteInvoiceRoute({ params }: Props) {
           <form
             action={async () => {
               'use server';
-
-              await deleteInvoice(invoiceId);
+              await markAsPaid(invoiceId);
             }}
           >
-            <SubmitButton variant="destructive" text="Delete" />
+            <SubmitButton text="Mark as Paid" />
           </form>
         </CardContent>
       </Card>

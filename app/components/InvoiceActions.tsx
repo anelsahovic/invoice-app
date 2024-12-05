@@ -17,9 +17,10 @@ import Link from 'next/link';
 
 interface Props {
   invoiceId: string;
+  status: string;
 }
 
-export default function InvoiceActions({ invoiceId }: Props) {
+export default function InvoiceActions({ invoiceId, status }: Props) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -29,11 +30,13 @@ export default function InvoiceActions({ invoiceId }: Props) {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end">
-        <DropdownMenuItem asChild>
-          <Link href="">
-            <CheckCircle className="size-4 mr-2" /> Mark as paid
-          </Link>
-        </DropdownMenuItem>
+        {status === 'PENDING' && (
+          <DropdownMenuItem asChild>
+            <Link href={`/dashboard/invoices/${invoiceId}/paid`}>
+              <CheckCircle className="size-4 mr-2" /> Mark as paid
+            </Link>
+          </DropdownMenuItem>
+        )}
         <DropdownMenuItem asChild>
           <Link href={`/dashboard/invoices/${invoiceId}`}>
             <Pencil className="size-4 mr-2" /> Edit
@@ -41,7 +44,7 @@ export default function InvoiceActions({ invoiceId }: Props) {
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link href={`/api/invoice/${invoiceId}`}>
-            <FileText className="size-4 mr-2" /> Open PDF
+            <FileText className="size-4 mr-2" /> Generate PDF
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>

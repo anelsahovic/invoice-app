@@ -21,7 +21,7 @@ export default async function InvoiceList() {
       <TableHeader>
         <TableRow>
           <TableHead>Invoice ID</TableHead>
-          <TableHead>Customer</TableHead>
+          <TableHead>Recipient</TableHead>
           <TableHead>Amount</TableHead>
           <TableHead>Status</TableHead>
           <TableHead>Date</TableHead>
@@ -47,7 +47,7 @@ export default async function InvoiceList() {
               {new Date(invoice.createdAt).toLocaleDateString()}
             </TableCell>
             <TableCell className="text-right">
-              <InvoiceActions invoiceId={invoice.id} />
+              <InvoiceActions invoiceId={invoice.id} status={invoice.status} />
             </TableCell>
           </TableRow>
         ))}

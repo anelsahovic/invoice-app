@@ -27,8 +27,13 @@ import { parseWithZod } from '@conform-to/zod';
 import { invoiceSchema } from '../utils/zodSchemas';
 import Link from 'next/link';
 import { formatCurrency } from '../utils/helperFunctions';
+import { userProps } from '../types/types';
 
-export default function CreateInvoice() {
+interface Props {
+  userData: userProps;
+}
+
+export default function CreateInvoice({ userData }: Props) {
   const [lastResult, action] = useActionState(createInvoice, undefined);
   const [form, fields] = useForm({
     lastResult,
@@ -139,7 +144,7 @@ export default function CreateInvoice() {
                   placeholder="Your Name"
                   name={fields.fromName.name}
                   key={fields.fromName.key}
-                  // defaultValue={fields.fromName.initialValue}
+                  defaultValue={`${userData.firstName} ${userData.lastName}`}
                 />
                 <p className="text-sm text-rose-500">
                   {fields.fromName.errors}
@@ -148,7 +153,7 @@ export default function CreateInvoice() {
                   placeholder="Your Email"
                   name={fields.fromEmail.name}
                   key={fields.fromEmail.key}
-                  // defaultValue={fields.fromEmail.initialValue}
+                  defaultValue={userData.email || ''}
                 />
                 <p className="text-sm text-rose-500">
                   {fields.fromEmail.errors}
@@ -157,7 +162,7 @@ export default function CreateInvoice() {
                   placeholder="Your Address"
                   name={fields.fromAddress.name}
                   key={fields.fromAddress.key}
-                  // defaultValue={fields.fromAddress.initialValue}
+                  defaultValue={userData.address || ''}
                 />
                 <p className="text-sm text-rose-500">
                   {fields.fromAddress.errors}
@@ -341,7 +346,7 @@ export default function CreateInvoice() {
 
           <div className="flex items-center justify-end">
             <div>
-              <SubmitButton text="Send Invoice" />
+              <SubmitButton text="Create Invoice" />
             </div>
           </div>
         </form>

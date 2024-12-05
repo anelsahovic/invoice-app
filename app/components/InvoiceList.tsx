@@ -7,10 +7,15 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import InvoiceActions from './InvoiceActions';
+import { requireUser } from '../utils/hooks';
+import { formatCurrency, getInvoiceData } from '../utils/helperFunctions';
+import { Badge } from '@/components/ui/badge';
 
-type Props = {};
+export default async function InvoiceList() {
+  const session = await requireUser();
 
-export default function InvoiceList({}: Props) {
+  const data = await getInvoiceData(session.user?.id as string);
+
   return (
     <Table>
       <TableHeader>
@@ -24,16 +29,28 @@ export default function InvoiceList({}: Props) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        <TableRow>
-          <TableCell>#1</TableCell>
-          <TableCell>John Doe</TableCell>
-          <TableCell>$55.00</TableCell>
-          <TableCell>Paid</TableCell>
-          <TableCell>22/11/2024</TableCell>
-          <TableCell className="text-right">
-            <InvoiceActions />
-          </TableCell>
-        </TableRow>
+        {data.map((invoice) => (
+          <TableRow key={invoice.id}>
+            <TableCell>{invoice.invoiceNumber}</TableCell>
+            <TableCell>{invoice.recipientName}</TableCell>
+            <TableCell>
+              {formatCurrency(invoice.total, invoice.currency)}
+            </TableCell>
+            <TableCell>
+              <Badge
+                variant={invoice.status === 'PENDING' ? 'pending' : 'success'}
+              >
+                {invoice.status}
+              </Badge>
+            </TableCell>
+            <TableCell>
+              {new Date(invoice.createdAt).toLocaleDateString()}
+            </TableCell>
+            <TableCell className="text-right">
+              <InvoiceActions invoiceId={invoice.id} />
+            </TableCell>
+          </TableRow>
+        ))}
       </TableBody>
     </Table>
   );

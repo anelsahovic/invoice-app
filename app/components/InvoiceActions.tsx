@@ -7,17 +7,19 @@ import {
 } from '@/components/ui/dropdown-menu';
 import {
   CheckCircle,
-  DownloadCloud,
-  Mail,
+  Download,
+  FileText,
   MoreHorizontal,
   Pencil,
   Trash,
 } from 'lucide-react';
 import Link from 'next/link';
 
-type Props = {};
+interface Props {
+  invoiceId: string;
+}
 
-export default function InvoiceActions({}: Props) {
+export default function InvoiceActions({ invoiceId }: Props) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -38,15 +40,16 @@ export default function InvoiceActions({}: Props) {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href="">
-            <DownloadCloud className="size-4 mr-2" /> Download
+          <Link href={`/api/invoice/${invoiceId}`}>
+            <FileText className="size-4 mr-2" /> Open PDF
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link href="">
-            <Mail className="size-4 mr-2" /> Reminder
+            <Download className="size-4 mr-2" /> Download PDF
           </Link>
         </DropdownMenuItem>
+
         <DropdownMenuItem asChild>
           <Link href="">
             <Trash className="size-4 mr-2" /> Delete

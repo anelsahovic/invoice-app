@@ -21,7 +21,10 @@ export default function Invoices() {
               <CardDescription>Manage your invoices.</CardDescription>
             </div>
 
-            <Link href="" className={buttonVariants()}>
+            <Link
+              href="/dashboard/invoices/create"
+              className={buttonVariants()}
+            >
               <Plus /> Create Invoice
             </Link>
           </div>

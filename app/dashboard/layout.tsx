@@ -56,7 +56,7 @@ export default async function layout({ children }: Props) {
           <div className="flex flex-col max-h-screen h-full gap-2">
             <div className="h-14 flex items-center border-b px-4 lg:h-[60px] lg:px-6">
               <Link href="/" className="flex items-center ">
-                <Image src={Logo} alt="logo" className="size-7" />
+                <Image src={Logo} alt="logo" className="size-10" />
                 <p className="text-2xl font-bold ml-2">Invoice</p>
                 <span className="text-blue-500 font-bold text-sm uppercase">
                   App
@@ -84,7 +84,7 @@ export default async function layout({ children }: Props) {
               <SheetContent side="left">
                 <SheetTitle>
                   <Link href="/" className="flex items-center ">
-                    <Image src={Logo} alt="logo" className="size-7" />
+                    <Image src={Logo} alt="logo" className="size-10" />
                     <p className="text-2xl font-bold ml-2">Invoice</p>
                     <span className="text-blue-500 font-bold text-sm uppercase">
                       App

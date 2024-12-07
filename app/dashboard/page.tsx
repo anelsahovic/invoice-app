@@ -1,13 +1,13 @@
-import { requireUser } from '../utils/hooks';
+import { Suspense } from 'react';
+import Loading from '../components/Loading';
+import Dashboard from '../components/Dashboard';
 
 // type Props = {};
 
-export default async function DashboardRoute() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const session = await requireUser();
+export default function DashboardRoute() {
   return (
-    <div>
-      <h1>Dashboard content is here</h1>
-    </div>
+    <Suspense fallback={<Loading />}>
+      <Dashboard />
+    </Suspense>
   );
 }

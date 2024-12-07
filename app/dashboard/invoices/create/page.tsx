@@ -1,17 +1,11 @@
 import CreateInvoice from '@/app/components/CreateInvoice';
-import { userProps } from '@/app/types/types';
-import { auth } from '@/app/utils/auth';
-import { getUserData } from '@/app/utils/helperFunctions';
-import React from 'react';
+import Loading from '@/app/components/Loading';
+import { Suspense } from 'react';
 
-export default async function InvoiceCreatePage() {
-  const session = await auth();
-
-  const userData: userProps = await getUserData(session?.user?.id as string);
-
+export default function InvoiceCreatePage() {
   return (
-    <div>
-      <CreateInvoice userData={userData} />
-    </div>
+    <Suspense fallback={<Loading />}>
+      <CreateInvoice />
+    </Suspense>
   );
 }

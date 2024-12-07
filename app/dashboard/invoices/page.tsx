@@ -1,4 +1,5 @@
 import InvoiceList from '@/app/components/InvoiceList';
+import Loading from '@/app/components/Loading';
 import { buttonVariants } from '@/components/ui/button';
 import {
   Card,
@@ -9,6 +10,7 @@ import {
 } from '@/components/ui/card';
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
+import { Suspense } from 'react';
 
 export default function Invoices() {
   return (
@@ -31,7 +33,9 @@ export default function Invoices() {
         </CardHeader>
 
         <CardContent>
-          <InvoiceList />
+          <Suspense fallback={<Loading />}>
+            <InvoiceList />
+          </Suspense>
         </CardContent>
       </Card>
     </div>

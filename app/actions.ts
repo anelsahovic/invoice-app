@@ -69,9 +69,11 @@ export const loginUser = async (prevState: unknown, formData: FormData) => {
       throw new Error(result?.error || 'Unknown error occurred');
     }
   } catch (error) {
+    // Check if `error` is an instance of Error and safely access `cause` and `err`
     const errorMessage =
-      error instanceof Error
-        ? error.cause?.err.message // If it's a standard Error object, use the message
+      error instanceof Error && error.cause
+        ? (error.cause as { err?: { message: string } })?.err?.message ||
+          'Unknown error occurred' // Safely access the `cause.err.message`
         : 'Invalid credentials. Please try again.'; // Fallback message
 
     return {

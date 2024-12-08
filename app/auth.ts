@@ -15,12 +15,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          return null;
+          throw new Error('Email and password are required');
         }
 
         // Check user against database
         const user = await prisma.user.findUnique({
-          where: { email: credentials.email },
+          where: { email: credentials.email as string },
         });
 
         if (!user) {
@@ -29,8 +29,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         // Verify the password using bcrypt
         const isPasswordValid = await bcrypt.compare(
-          credentials.password,
-          user.password
+          credentials.password as string,
+          user?.password as string
         );
 
         if (!isPasswordValid) {
@@ -41,7 +41,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return {
           id: user.id,
           email: user.email,
-          username: user.username,
+          username: user.username as string,
           firstName: user.firstName,
           lastName: user.lastName,
         };
@@ -60,15 +60,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (user) {
         token.id = user.id;
         token.email = user.email;
-        token.username = user.username;
+        token.username = user.username; // TypeScript will recognize this now
       }
       return token;
     },
     async session({ session, token }) {
       if (token) {
-        session.user.id = token.id;
-        session.user.email = token.email;
-        session.user.username = token.username;
+        session.user.id = token.id as string;
+        session.user.email = token.email as string;
+        session.user.username = token.username as string; // TypeScript will recognize this now
       }
       return session;
     },

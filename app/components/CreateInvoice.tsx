@@ -1,5 +1,5 @@
 import React from 'react';
-import { auth } from '../utils/auth';
+import { auth } from '../auth';
 import { userProps } from '../types/types';
 import { getUserData } from '../utils/helperFunctions';
 import CreateInvoiceCard from './CreateInvoiceCard';

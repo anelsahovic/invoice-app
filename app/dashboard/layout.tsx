@@ -19,9 +19,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { signOut } from '../utils/auth';
+import { signOut } from '../auth';
 import prisma from '../utils/db';
 import { redirect } from 'next/navigation';
+import { getUserData } from '../utils/helperFunctions';
 
 interface Props {
   children: React.ReactNode;
@@ -49,6 +50,7 @@ export default async function layout({ children }: Props) {
   const session = await requireUser();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const data = await getUser(session.user?.id as string);
+  const user = await getUserData(session.user?.id as string);
   return (
     <>
       <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
@@ -111,7 +113,11 @@ export default async function layout({ children }: Props) {
                 </DropdownMenuTrigger>
 
                 <DropdownMenuContent align="end">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuLabel>
+                    <p>{`${user.firstName} ${user.lastName}`}</p>
+                    <p className="text-slate-700 text-xs">{`@${user?.username}`}</p>
+                  </DropdownMenuLabel>
+
                   <DropdownMenuSeparator />
 
                   <DropdownMenuItem asChild>

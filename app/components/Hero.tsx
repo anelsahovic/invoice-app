@@ -4,7 +4,7 @@ import React from 'react';
 
 export default function Hero() {
   return (
-    <div className="h-[550px] sm:h-[500px] px-5 sm:space-y-5 md:space-y-2  max-w-[1000px] mx-auto motion-preset-confetti ">
+    <div className="h-[550px] sm:h-[500px] px-5 sm:space-y-5 md:space-y-2  max-w-[1000px] mx-auto motion-preset-focus motion-duration-300">
       <h1 className="text-white text-3xl sm:text-5xl md:text-7xl font-bold text-center mt-4 capitalize">
         Invoicing made easy
       </h1>

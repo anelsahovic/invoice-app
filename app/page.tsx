@@ -7,7 +7,7 @@ import Footer from './components/Footer';
 export default function Home() {
   return (
     <div className="">
-      <div className="mx-auto h-full bg-gradient-to-r from-[#3da1f3] via-[#0ccfd6] to-[#099e83] z-10">
+      <div className="mx-auto h-full bg-gradient-to-r from-[#3da1f3] via-[#0ccfd6] to-[#099e83] ">
         <Navbar />
         <Hero />
       </div>

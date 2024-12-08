@@ -11,10 +11,10 @@ export default function Footer() {
             <Link href="/" className="flex items-center ">
               <Image
                 src="/logo.png"
-                width={10}
-                height={10}
+                width={60}
+                height={60}
                 alt="logo"
-                className="size-10"
+                className=""
               />
               <p className="text-2xl font-bold ml-2 text-white">Invoice</p>
               <span className=" font-bold text-sm uppercase text-primary">

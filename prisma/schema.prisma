@@ -15,20 +15,23 @@ datasource db {
 
 model User {
   id            String          @id @default(cuid())
-  firstName     String?
-  lastName      String?
-  address       String?
+  firstName     String
+  lastName      String
+  username      String          @unique
+  address       String
   email         String          @unique
   emailVerified DateTime?
+  password      String
   image         String?
   accounts      Account[]
-  sessions      Session[]
+  // sessions      Session[] 
   // Optional for WebAuthn support
   Authenticator Authenticator[]
   invoices      Invoice[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Session   Session[]
 }
 
 model Account {
@@ -101,7 +104,7 @@ model Invoice {
   recipientAddress   String
   currency           String
   invoiceNumber      Int
-  note               String
+  note               String?
   invoiceDescription String
   invoiceQuantity    Int
   invoiceRate        Int

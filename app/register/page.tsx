@@ -1,8 +1,8 @@
-import { auth } from '../auth';
 import { redirect } from 'next/navigation';
-import LoginForm from '../components/LoginForm';
+import { auth } from '../auth';
+import RegisterForm from '../components/RegisterForm';
 
-export default async function Login() {
+export default async function Register() {
   const session = await auth();
 
   if (session?.user) {
@@ -11,7 +11,7 @@ export default async function Login() {
 
   return (
     <>
-      <LoginForm />
+      <RegisterForm />
     </>
   );
 }

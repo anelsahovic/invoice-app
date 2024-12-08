@@ -1,18 +1,92 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use server';
-
 import { requireUser } from './utils/hooks';
 import { parseWithZod } from '@conform-to/zod';
-import { invoiceSchema, onboardingSchema } from './utils/zodSchemas';
+import { invoiceSchema, loginSchema, userSchema } from './utils/zodSchemas';
 import prisma from './utils/db';
 import { redirect } from 'next/navigation';
+import bcrypt from 'bcrypt';
+import { CredentialsSignin } from 'next-auth';
+import { signIn } from './auth';
+
+export const registerUser = async (prevState: unknown, formData: FormData) => {
+  // const session = await requireUser();
+
+  const submission = parseWithZod(formData, {
+    schema: userSchema,
+  });
+
+  if (submission.status !== 'success') {
+    return submission.reply();
+  }
+
+  try {
+    const hashedPassword = await bcrypt.hash(submission.value.password, 10);
+    const normalizedEmail = submission.value.email.toLowerCase().trim();
+
+    const data = await prisma.user.create({
+      data: {
+        firstName: submission.value.firstName.trim(),
+        lastName: submission.value.lastName.trim(),
+        username: submission.value.username.trim(),
+        address: submission.value.address.trim(),
+        email: normalizedEmail,
+        password: hashedPassword,
+      },
+    });
+  } catch (error) {
+    console.error('Error creating user:', error);
+    return {
+      status: 'error',
+      message: 'Failed to register user. Please try again.',
+    };
+  }
+  return redirect('/login');
+};
+
+export const loginUser = async (prevState: unknown, formData: FormData) => {
+  const submission = parseWithZod(formData, {
+    schema: loginSchema,
+  });
+
+  if (submission.status !== 'success') {
+    return submission.reply();
+  }
+
+  const email = submission.value.email.toLowerCase().trim();
+  const password = submission.value.password;
+
+  try {
+    const result = await signIn('credentials', {
+      redirect: false, // Avoid automatic redirect
+      callbackUrl: '/dashboard', // Successful login redirect
+      email,
+      password,
+    });
+
+    if (!result || result.error) {
+      throw new Error(result?.error || 'Unknown error occurred');
+    }
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error
+        ? error.cause?.err.message // If it's a standard Error object, use the message
+        : 'Invalid credentials. Please try again.'; // Fallback message
+
+    return {
+      success: false,
+      error: errorMessage,
+    };
+  }
+  return redirect('/dashboard');
+};
 
 export async function onboardUser(prevState: any, formData: FormData) {
   const session = await requireUser();
 
   const submission = parseWithZod(formData, {
-    schema: onboardingSchema,
+    schema: userSchema,
   });
 
   if (submission.status !== 'success') {
@@ -31,7 +105,7 @@ export async function onboardUser(prevState: any, formData: FormData) {
     },
   });
 
-  return redirect('/dashboard');
+  return redirect('/login');
 }
 
 export async function createInvoice(prevState: any, formData: FormData) {
@@ -63,7 +137,7 @@ export async function createInvoice(prevState: any, formData: FormData) {
       invoiceNumber: submission.value.invoiceNumber,
       status: submission.value.status,
       total: submission.value.total,
-      note: submission.value.note as string,
+      note: (submission.value.note as string) ?? '',
       userId: session.user?.id,
     },
   });

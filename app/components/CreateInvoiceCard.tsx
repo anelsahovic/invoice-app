@@ -20,14 +20,14 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { CalendarIcon, CircleArrowLeft } from 'lucide-react';
 import { useActionState, useEffect, useState } from 'react';
-import SubmitButton from './SubmitButtons';
+import { userProps } from '../types/types';
 import { createInvoice } from '../actions';
 import { useForm } from '@conform-to/react';
 import { parseWithZod } from '@conform-to/zod';
 import { invoiceSchema } from '../utils/zodSchemas';
 import Link from 'next/link';
 import { formatCurrency } from '../utils/helperFunctions';
-import { userProps } from '../types/types';
+import SubmitButton from './SubmitButtons';
 
 interface Props {
   userData: userProps;
@@ -274,7 +274,7 @@ export default function CreateInvoiceCard({ userData }: Props) {
                   defaultValue={fields.invoiceDescription.initialValue}
                 />
                 <p className="text-sm text-rose-500">
-                  {fields.invoiceName.errors}
+                  {fields.invoiceDescription.errors}
                 </p>
               </div>
               <div className="col-span-2">

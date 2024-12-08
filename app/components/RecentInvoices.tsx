@@ -14,13 +14,13 @@ export default async function RecentInvoices() {
   const session = await requireUser();
   const transactions = await getTransactions(session.user?.id as string);
   return (
-    <Card className="p-2 w-full h-full flex flex-col justify-around">
+    <Card className="p-2 w-full h-full ">
       <CardHeader>
         <CardTitle>Recent Invoices</CardTitle>
         <CardDescription>Showing recent invoices</CardDescription>
       </CardHeader>
 
-      <CardContent className="space-y-4 ">
+      <CardContent className="space-y-4 flex flex-col justify-around">
         {transactions.map((transaction) => (
           <div key={transaction.id} className="flex flex-col ">
             <div className="flex items-center bg-white py-2">

@@ -7,7 +7,6 @@ import { invoiceSchema, loginSchema, userSchema } from './utils/zodSchemas';
 import prisma from './utils/db';
 import { redirect } from 'next/navigation';
 import bcrypt from 'bcrypt';
-import { CredentialsSignin } from 'next-auth';
 import { signIn } from './auth';
 
 export const registerUser = async (prevState: unknown, formData: FormData) => {
@@ -69,9 +68,10 @@ export const loginUser = async (prevState: unknown, formData: FormData) => {
       throw new Error(result?.error || 'Unknown error occurred');
     }
   } catch (error) {
+    const err = error as Error; // Now `err` has the properties of the Error class
     const errorMessage =
-      error instanceof Error
-        ? error.cause?.err.message // If it's a standard Error object, use the message
+      err instanceof Error
+        ? err.message // Use the message property of the Error object
         : 'Invalid credentials. Please try again.'; // Fallback message
 
     return {

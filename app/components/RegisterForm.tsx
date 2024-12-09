@@ -56,7 +56,7 @@ export default function RegisterForm() {
                   placeholder="John"
                   key={fields.firstName.key}
                   name={fields.firstName.name}
-                  defaultValue={fields.firstName.initialValue}
+                  defaultValue={fields.firstName.initialValue as string}
                 />
                 <p className="text-sm text-rose-500">
                   {fields.firstName.errors}
@@ -68,7 +68,7 @@ export default function RegisterForm() {
                   id="lastname"
                   key={fields.lastName.key}
                   name={fields.lastName.name}
-                  defaultValue={fields.lastName.initialValue}
+                  defaultValue={fields.lastName.initialValue as string}
                   placeholder="Doe"
                 />
                 <p className="text-sm text-rose-500">
@@ -82,7 +82,7 @@ export default function RegisterForm() {
                 <Input
                   id="username"
                   key={fields.username.key}
-                  defaultValue={fields.username.initialValue}
+                  defaultValue={fields.username.initialValue as string}
                   name={fields.username.name}
                   placeholder="@username"
                 />
@@ -95,7 +95,7 @@ export default function RegisterForm() {
                 <Input
                   id="address"
                   key={fields.address.key}
-                  defaultValue={fields.address.initialValue}
+                  defaultValue={fields.address.initialValue as string}
                   name={fields.address.name}
                   placeholder="St.Luis 123C"
                 />
@@ -111,7 +111,7 @@ export default function RegisterForm() {
                 required
                 placeholder="example@mail.com"
                 key={fields.email.key}
-                defaultValue={fields.email.initialValue}
+                defaultValue={fields.email.initialValue as string}
                 name={fields.email.name}
               />
               <p className="text-sm text-rose-500">{fields.email.errors}</p>

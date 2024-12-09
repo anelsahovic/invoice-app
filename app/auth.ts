@@ -1,8 +1,29 @@
 import { PrismaAdapter } from '@auth/prisma-adapter';
-import NextAuth from 'next-auth';
+import NextAuth, { DefaultSession } from 'next-auth';
 import prisma from './utils/db';
 import Credentials from 'next-auth/providers/credentials';
 import bcrypt from 'bcrypt';
+
+declare module 'next-auth' {
+  /**
+   * Returned by `auth`, `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
+   */
+  interface Session {
+    user: {
+      /** The user's postal address. */
+      address: string;
+      /**
+       * By default, TypeScript merges new interface properties and overwrites existing ones.
+       * In this case, the default session user properties will be overwritten,
+       * with the new ones defined above. To keep the default session user properties,
+       * you need to add them back into the newly declared interface.
+       */
+    } & DefaultSession['user'];
+  }
+  interface User {
+    username: string;
+  }
+}
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -20,7 +41,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         // Check user against database
         const user = await prisma.user.findUnique({
-          where: { email: credentials.email },
+          where: { email: credentials.email as string },
         });
 
         if (!user) {
@@ -29,7 +50,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         // Verify the password using bcrypt
         const isPasswordValid = await bcrypt.compare(
-          credentials.password,
+          credentials.password as string,
           user.password
         );
 
@@ -60,15 +81,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (user) {
         token.id = user.id;
         token.email = user.email;
-        token.username = user.username;
+        // token.username = user.username;
       }
       return token;
     },
     async session({ session, token }) {
       if (token) {
-        session.user.id = token.id;
-        session.user.email = token.email;
-        session.user.username = token.username;
+        session.user.id = token.id as string;
+        session.user.email = token.email as string;
+        // session.user.username = token.username;
       }
       return session;
     },

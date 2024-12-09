@@ -258,12 +258,16 @@ export default function CreateInvoiceCard({ userData }: Props) {
             </div>
           </div>
 
-          <div className="">
+          <div>
+            <div className="grid grid-cols-12 gap-4 mb-2 font-medium">
+              <p className="col-span-6">Description</p>
+              <p className="col-span-2">Quantity</p>
+              <p className="col-span-2">Rate</p>
+              <p className="col-span-2">Amount</p>
+            </div>
             <div className="grid grid-cols-12 gap-4 mb-4">
-              <div className="col-span-12 md:col-span-6">
-                <p className="col-span-12 md:col-span-6">Description</p>
+              <div className="col-span-6">
                 <Textarea
-                  id="invoiceDescription"
                   placeholder="Item description..."
                   name={fields.invoiceDescription.name}
                   key={fields.invoiceDescription.key}
@@ -273,46 +277,36 @@ export default function CreateInvoiceCard({ userData }: Props) {
                   {fields.invoiceDescription.errors}
                 </p>
               </div>
-
-              <div className="col-span-12 md:col-span-6 flex gap-4">
-                <div className="flex-1">
-                  <p className="col-span-6 md:col-span-2">Quantity</p>
-                  <Input
-                    id="invoiceQuantity"
-                    type="number"
-                    placeholder="0"
-                    name={fields.invoiceQuantity.name}
-                    key={fields.invoiceQuantity.key}
-                    value={quantity}
-                    onChange={(e) => setQuantity(e.target.value)}
-                  />
-                  <p className="text-sm text-rose-500">
-                    {fields.invoiceQuantity.errors}
-                  </p>
-                </div>
-                <div className="flex-1">
-                  <p className="col-span-6 md:col-span-2">Rate</p>
-                  <Input
-                    id="invoiceRate"
-                    type="number"
-                    placeholder="0"
-                    name={fields.invoiceRate.name}
-                    key={fields.invoiceRate.key}
-                    value={rate}
-                    onChange={(e) => setRate(e.target.value)}
-                  />
-                  <p className="text-sm text-rose-500">
-                    {fields.invoiceRate.errors}
-                  </p>
-                </div>
-                <div className="flex-1">
-                  <p className="col-span-6 md:col-span-2">Amount</p>
-                  <Input
-                    id="invoiceAmount"
-                    disabled
-                    value={formatCurrency(total, currency)}
-                  />
-                </div>
+              <div className="col-span-2">
+                <Input
+                  type="number"
+                  placeholder="0"
+                  name={fields.invoiceQuantity.name}
+                  key={fields.invoiceQuantity.key}
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value)}
+                  // defaultValue={fields.invoiceQuantity.initialValue}
+                />
+                <p className="text-sm text-rose-500">
+                  {fields.invoiceQuantity.errors}
+                </p>
+              </div>
+              <div className="col-span-2">
+                <Input
+                  type="number"
+                  placeholder="0"
+                  name={fields.invoiceRate.name}
+                  key={fields.invoiceRate.key}
+                  value={rate}
+                  onChange={(e) => setRate(e.target.value)}
+                  // defaultValue={fields.invoiceRate.initialValue}
+                />
+                <p className="text-sm text-rose-500">
+                  {fields.invoiceRate.errors}
+                </p>
+              </div>
+              <div className="col-span-2">
+                <Input disabled value={formatCurrency(total, currency)} />
               </div>
             </div>
           </div>

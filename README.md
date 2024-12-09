@@ -2,7 +2,8 @@
 
 A web application built with Next.js for managing invoices. This app includes features like user authentication, invoice creation and management, and the ability to generate and download invoices as PDFs.
 
-![Invoice App Screenshot](/dashboard.png)
+![Invoice App HomePage](/homepage_screenshot.webp)
+![Invoice App Dashboard](/dashboard.webp)
 
 ## Features
 

@@ -4,7 +4,7 @@ import Link from 'next/link';
 export default function DashboardSection() {
   return (
     <div className="mt-8 flex flex-col items-center justify-center space-y-8 py-3 px-6 motion-preset-focus motion-duration-2000">
-      <Image
+      <img
         src="/dashboard.png"
         alt="dashboard.png"
         width={800}

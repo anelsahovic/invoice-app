@@ -5,7 +5,7 @@ export default function PdfSection() {
   return (
     <div className="my-8 flex flex-col items-center justify-center space-y-8 py-3 px-6 max-w-[1000px] mx-auto motion-preset-blur-right motion-duration-2000">
       <div className="relative flex items-center justify-center w-full">
-        <Image
+        <img
           src="/pdf.png"
           alt="pdf"
           width={400}

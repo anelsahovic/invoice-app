@@ -115,7 +115,7 @@ export default async function layout({ children }: Props) {
                 <DropdownMenuContent align="end">
                   <DropdownMenuLabel>
                     <p>{`${user.firstName} ${user.lastName}`}</p>
-                    <p className="text-slate-700 text-xs">{`@${user?.username}`}</p>
+                    <p className="text-slate-700 text-xs">{`@${user?.email}`}</p>
                   </DropdownMenuLabel>
 
                   <DropdownMenuSeparator />

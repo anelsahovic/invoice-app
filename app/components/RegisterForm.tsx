@@ -29,6 +29,25 @@ export default function RegisterForm() {
     shouldValidate: 'onBlur',
     shouldRevalidate: 'onInput',
   });
+
+  const renderErrors = (error: Record<string, string[] | null>) => {
+    return Object.entries(error).map(([field, messages]) => {
+      if (messages) {
+        return (
+          <div key={field}>
+            <ul>
+              {messages.map((message, index) => (
+                <li className="text-rose-500" key={index}>
+                  {message}
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      }
+      return null;
+    });
+  };
   return (
     <div className="flex h-screen w-full items-center justify-center px-8">
       <Card className=" max-w-sm grow">
@@ -48,6 +67,8 @@ export default function RegisterForm() {
             //   await signIn('nodemailer', formData);
             // }}
           >
+            {lastResult?.error && renderErrors(lastResult.error)}
+
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex flex-col gap-2">
                 <Label>First name</Label>

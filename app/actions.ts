@@ -37,8 +37,10 @@ export const registerUser = async (prevState: unknown, formData: FormData) => {
   } catch (error) {
     console.error('Error creating user:', error);
     return {
-      status: 'error',
-      message: 'Failed to register user. Please try again.',
+      success: false,
+      error: {
+        error: ['Failed to register. Please try again.'],
+      } as Record<string, string[] | null>, // Correctly asserting the type
     };
   }
   return redirect('/login');
@@ -70,7 +72,9 @@ export const loginUser = async (prevState: unknown, formData: FormData) => {
   } catch (error) {
     return {
       success: false,
-      error: 'Invalid credentials. Please try again.',
+      error: {
+        error: ['Invalid credentials. Please try again.'],
+      } as Record<string, string[] | null>, // Correctly asserting the type
     };
   }
   return redirect('/dashboard');

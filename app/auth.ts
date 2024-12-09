@@ -3,6 +3,7 @@ import NextAuth, { DefaultSession } from 'next-auth';
 import prisma from './utils/db';
 import Credentials from 'next-auth/providers/credentials';
 import bcrypt from 'bcrypt';
+import { Adapter } from 'next-auth/adapters';
 
 declare module 'next-auth' {
   /**
@@ -26,7 +27,7 @@ declare module 'next-auth' {
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prisma) as Adapter,
   providers: [
     Credentials({
       name: 'Credentials',

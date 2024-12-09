@@ -344,7 +344,7 @@ function EditInvoice({ invoiceData }: Props) {
               placeholder="Type your notes..."
               name={fields.note.name}
               key={fields.note.key}
-              defaultValue={invoiceData.note}
+              defaultValue={invoiceData.note as string}
             />
             <p className="text-sm text-rose-500">{fields.note.errors}</p>
           </div>

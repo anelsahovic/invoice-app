@@ -29,6 +29,26 @@ export default function LoginForm() {
     shouldRevalidate: 'onInput',
   });
   console.log(lastResult?.error);
+
+  const renderErrors = (error: Record<string, string[] | null>) => {
+    return Object.entries(error).map(([field, messages]) => {
+      if (messages) {
+        return (
+          <div key={field}>
+            <ul>
+              {messages.map((message, index) => (
+                <li className="text-rose-500" key={index}>
+                  {message}
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      }
+      return null;
+    });
+  };
+
   return (
     <div className="flex h-screen w-full items-center justify-center px-8">
       <Card className=" max-w-sm grow">
@@ -50,9 +70,7 @@ export default function LoginForm() {
             // }}
           >
             {/* Display Global Error Message */}
-            {lastResult?.error && (
-              <div className="text-rose-500">{lastResult.error}</div>
-            )}
+            {lastResult?.error && renderErrors(lastResult.error)}
 
             <div className="flex flex-col gap-y-2">
               <Label>E-mail</Label>

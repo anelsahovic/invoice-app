@@ -6,7 +6,7 @@ export default function PdfSection() {
     <div className="my-8 flex flex-col items-center justify-center space-y-8 py-3 px-6 max-w-[1000px] mx-auto motion-preset-blur-right motion-duration-2000">
       <div className="relative flex items-center justify-center w-full">
         <img
-          src="/pdf.png"
+          src="/pdf.webp"
           alt="pdf"
           width={400}
           height={800}

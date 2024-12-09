@@ -5,7 +5,7 @@ export default function DashboardSection() {
   return (
     <div className="mt-8 flex flex-col items-center justify-center space-y-8 py-3 px-6 motion-preset-focus motion-duration-2000">
       <img
-        src="/dashboard.png"
+        src="/dashboard.webp"
         alt="dashboard.png"
         width={800}
         height={300}
